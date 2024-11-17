@@ -476,6 +476,29 @@ This notation is only supported in the context of applying a controlled operatio
 :code:`swap` operation is not allowed.
 Negating the polarity of control qubits is similarly supported when using :code:`cudaq::control` to conditionally apply a custom quantum kernel.
 
+For controlled operations using an arbitrary rotation (any of the :code:`r` gates), the rotation to apply comes before all qubit arguments:
+
+.. tab:: Python
+
+    .. code-block:: python
+
+        c, q = cudaq.qubit(), cudaq.qubit()
+        h(c)
+        # Apply the unitary transformation to q, conditional on c
+        # Rz(λ) = | exp(-iλ/2)      0     |
+        #         |     0       exp(iλ/2) |
+        rz.ctrl(math.pi, c, q)
+
+.. tab:: C++
+
+    .. code-block:: cpp
+
+        cudaq::qubit c, q;
+        h(c);
+        // Apply the unitary transformation to q, conditional on c
+        // Rz(λ) = | exp(-iλ/2)      0     |
+        //         |     0       exp(iλ/2) |
+        rz<cudaq::ctrl>(std::numbers::pi, c, q);
 
 Measurements on Qubits
 =============================
